@@ -8,6 +8,19 @@ typedef struct Matrix
 	float **matrix;
 } Matrix;
 
+void print_matrix(const Matrix *const matrix)
+{
+	for (int r = 0; r < matrix->rows; r++)
+	{
+		printf("[ ");
+		for (int c = 0; c < matrix->cols; c++)
+		{
+			printf("%.2f ", matrix->matrix[r][c]);
+		}
+		printf("]\n");
+	}
+}
+
 Matrix *new_matrix(int rows, int cols)
 {
 	float **arr = malloc(sizeof(float) * cols);
@@ -46,27 +59,16 @@ Matrix *input_new_matrix()
 		}
 	}
 
+	print_matrix(matrix);
+
 	return matrix;
 }
 
-void print_matrix(Matrix *matrix)
-{
-	for (int r = 0; r < matrix->rows; r++)
-	{
-		printf("[ ");
-		for (int c = 0; c < matrix->cols; c++)
-		{
-			printf("%.2f ", matrix->matrix[r][c]);
-		}
-		printf("]\n");
-	}
-}
-
-Matrix *multiply_matrices(Matrix *matrix1, Matrix *matrix2)
+Matrix *multiply_matrices(const Matrix *const matrix1, const Matrix *const matrix2)
 {
 	if (matrix1->cols != matrix2->rows)
 	{
-		printf("You cannot multiply this matricies");
+		printf("You cannot multiply this matricies\n");
 		return 0;
 	}
 

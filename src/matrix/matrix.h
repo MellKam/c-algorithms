@@ -13,7 +13,7 @@ typedef struct Matrix
 
 Matrix *new_matrix(int rows, int cols);
 Matrix *input_new_matrix();
-void print_matrix(Matrix *matrix);
-Matrix *multiply_matrices(Matrix *matrix1, Matrix *matrix2);
+void print_matrix(const Matrix *const matrix);
+Matrix *multiply_matrices(const Matrix *const matrix1, const Matrix *const matrix2);
 
 #endif
