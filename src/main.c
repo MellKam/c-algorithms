@@ -10,14 +10,14 @@ void main()
 
 	Matrix *result = multiply_matrices(m1, m2);
 
-	if (result)
+	if (result != NULL)
 	{
 		printf("Result matrix: \n");
 		print_matrix(result);
 
-		free(result);
+		free_matrix(result);
 	}
 
-	free(m1);
-	free(m2);
+	free_matrix(m1);
+	free_matrix(m2);
 }

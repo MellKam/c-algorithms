@@ -21,19 +21,40 @@ void print_matrix(const Matrix *const matrix)
 	}
 }
 
+void free_matrix(Matrix *matrix)
+{
+	for (int r = 0; r < matrix->rows; r++)
+	{
+		free(matrix->matrix[r]);
+	}
+	free(matrix->matrix);
+	free(matrix);
+}
+
 Matrix *new_matrix(int rows, int cols)
 {
-	float **arr = malloc(sizeof(float) * cols);
-	for (int r = 0; r < rows; r++)
+	Matrix *matrix = malloc(sizeof(Matrix));
+	if (matrix == NULL)
 	{
-		arr[r] = malloc(sizeof(float) * rows);
+		return NULL;
 	}
 
-	Matrix *matrix = malloc(sizeof(Matrix));
+	float **arr = malloc(sizeof(float *) * rows);
 
-	matrix->matrix = arr;
 	matrix->cols = cols;
 	matrix->rows = rows;
+	matrix->matrix = arr;
+
+	for (int r = 0; r < rows; r++)
+	{
+		arr[r] = malloc(sizeof(float) * cols);
+
+		if (arr[r] == NULL)
+		{
+			free_matrix(matrix);
+			return NULL;
+		}
+	}
 
 	return matrix;
 }
@@ -49,10 +70,14 @@ Matrix *input_new_matrix()
 	scanf("%d", &cols);
 
 	Matrix *matrix = new_matrix(rows, cols);
-
-	for (int r = 0; r < matrix->rows; r++)
+	if (matrix == NULL)
 	{
-		for (int c = 0; c < matrix->cols; c++)
+		return NULL;
+	}
+
+	for (int r = 0; r < rows; r++)
+	{
+		for (int c = 0; c < cols; c++)
 		{
 			printf("Enter matrix[%d][%d]: ", r, c);
 			scanf("%f", &(matrix->matrix[r][c]));
